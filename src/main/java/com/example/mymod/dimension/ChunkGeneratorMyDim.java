@@ -31,8 +31,10 @@ public class ChunkGeneratorMyDim implements IChunkGenerator {
             for (int bz = 0; bz < 16; bz++) {
                 chunk.setBiomeArray(bx + bz * 16, (byte) biome.getIdForBiome(biome));
 
-                int height = 55 + (int) (Math.sin((x * 16 + bx) * 0.1) * 5 + Math.cos((z * 16 + bz) * 0.1) * 5);
-                height = Math.max(50, Math.min(65, height));
+                // Hill generation
+                double noise = noiseGen1.generateNoiseOctaves(null, x * 16 + bx, z * 16 + bz, 1, 1, 0.05, 0.05, 0.5)[0];
+                int height = 50 + (int) (noise * 20);
+                height = Math.max(45, Math.min(75, height));
 
                 for (int y = 0; y < height - 3; y++) {
                     if (rand.nextInt(8) == 0) {
